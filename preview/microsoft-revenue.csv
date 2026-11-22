@@ -1,0 +1,4 @@
+cik,period_start,period_end,filed_date,form,taxonomy,tag,source_unit,value_text,accession_number,filing_url
+0000789019,2021-07-01,2022-06-30,2022-07-28,10-K,us-gaap,RevenueFromContractWithCustomerExcludingAssessedTax,USD,198270000000,0001564590-22-026876,https://www.sec.gov/Archives/edgar/data/789019/000156459022026876/msft-10k_20220630.htm
+0000789019,2022-07-01,2023-06-30,2023-07-27,10-K,us-gaap,RevenueFromContractWithCustomerExcludingAssessedTax,USD,211915000000,0000950170-23-035122,https://www.sec.gov/Archives/edgar/data/789019/000095017023035122/msft-20230630.htm
+0000789019,2023-07-01,2024-06-30,2024-07-30,10-K,us-gaap,RevenueFromContractWithCustomerExcludingAssessedTax,USD,245122000000,0000950170-24-087843,https://www.sec.gov/Archives/edgar/data/789019/000095017024087843/msft-20240630.htm

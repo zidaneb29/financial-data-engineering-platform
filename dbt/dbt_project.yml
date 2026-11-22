@@ -1,0 +1,20 @@
+name: fdep
+version: '1.0.0'
+config-version: 2
+profile: fdep
+require-dbt-version: ['>=1.11.0', '<1.12.0']
+flags:
+  send_anonymous_usage_stats: false
+models:
+  fdep:
+    +materialized: view
+    staging:
+      +schema: staging
+    marts:
+      +schema: analytics
+seeds:
+  fdep:
+    +schema: scope
+    issuer_scope:
+      +column_types:
+        cik: varchar(10)

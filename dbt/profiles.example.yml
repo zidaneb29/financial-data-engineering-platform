@@ -1,0 +1,23 @@
+fdep:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "{{ env_var('FDEP_DUCKDB_PATH', '.local/phase4.duckdb') }}"
+      schema: fdep
+      threads: 1
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('FDEP_DBT_ACCOUNT') }}"
+      user: "{{ env_var('FDEP_DBT_USER') }}"
+      role: "{{ env_var('FDEP_DBT_ROLE') }}"
+      authenticator: externalbrowser
+      database: "{{ env_var('FDEP_DBT_DATABASE') }}"
+      warehouse: "{{ env_var('FDEP_DBT_WAREHOUSE') }}"
+      schema: "{{ env_var('FDEP_DBT_SCHEMA') }}"
+      threads: 1
+      session_parameters:
+        TIMEZONE: UTC
+        STATEMENT_TIMEOUT_IN_SECONDS: 120
+        STATEMENT_QUEUED_TIMEOUT_IN_SECONDS: 60
+        QUERY_TAG: "{{ env_var('FDEP_DBT_QUERY_TAG', 'FDEP_PHASE4') }}"

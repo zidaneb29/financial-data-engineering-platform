@@ -1,0 +1,2 @@
+-r requirements-dbt.txt
+dbt-snowflake==1.10.6

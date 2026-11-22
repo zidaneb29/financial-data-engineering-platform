@@ -1,0 +1,23 @@
+version: 2
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: ingestion_record
+        description: Append-only normalized changes with exact source value text and checked NUMBER(38,12).
+      - name: sec_snapshot_member
+        description: Complete normalized SEC membership by batch, including unchanged filings and facts.
+      - name: batch_object
+        description: Request occurrences linking committed batches to archived source objects.
+      - name: source_object
+        description: Original source bodies and immutable object paths and hashes.
+      - name: numeric_quarantine
+        description: Values that did not fit the RAW fixed-precision projection.
+  - name: ops
+    schema: ops
+    tables:
+      - name: batch_load
+        description: Transactional commit ledger and manifest for published RAW batches.
+        columns:
+          - name: batch_id
+            data_tests: [unique, not_null]

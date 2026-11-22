@@ -1,0 +1,28 @@
+name: Offline Airflow smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: offline-airflow-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Show Docker and Compose versions
+        run: |
+          docker version
+          docker compose version
+      - name: Build offline runtime image
+        run: docker compose build airflow-smoke
+      - name: Verify Airflow task states and DuckDB publication
+        run: docker compose run --rm --no-deps airflow-smoke

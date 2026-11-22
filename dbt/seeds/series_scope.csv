@@ -1,0 +1,7 @@
+series_id,cadence
+FEDFUNDS,monthly
+CPIAUCSL,monthly
+UNRATE,monthly
+GDPC1,quarterly
+DGS2,daily
+DGS10,daily

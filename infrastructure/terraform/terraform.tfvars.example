@@ -1,0 +1,4 @@
+region            = "us-east-2"
+bucket_name       = "replace-with-a-unique-private-project-bucket"
+archive_namespace = "financial-portfolio"
+runtime_source_role_arn = "arn:aws:iam::123456789012:role/managed/AccountFullAccessRole"

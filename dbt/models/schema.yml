@@ -1,0 +1,101 @@
+version: 2
+seeds:
+  - name: issuer_scope
+    description: Configured issuer coverage, keyed by zero-padded SEC CIK.
+    columns:
+      - name: cik
+        data_tests: [not_null, unique]
+  - name: series_scope
+    description: Configured FRED series and their native cadence.
+    columns:
+      - name: series_id
+        data_tests: [not_null, unique]
+models:
+  - name: stg_batches
+    description: Committed load ledger with source scope, source observation timestamp and manifest sequence.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [source, entity, batch_sequence]
+    columns:
+      - name: observed_at
+        data_tests: [not_null]
+      - name: batch_sequence
+        data_tests: [not_null]
+  - name: stg_batch_objects
+    description: Committed request occurrences and their stored object identities.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [batch_id, request_index]
+  - name: stg_fred_observations
+    description: FRED change history, including same-day revisions, explicit missing observations and numeric quarantines.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [batch_id, series_id, observation_date]
+    columns:
+      - name: observation_date
+        data_tests: [not_null]
+      - name: snapshot_date
+        data_tests: [not_null]
+      - name: is_missing
+        data_tests: [not_null]
+  - name: stg_sec_members
+    description: All members of each committed SEC snapshot. Includes unchanged records.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [batch_id, dataset, row_ordinal]
+  - name: stg_sec_filings
+    description: Filing versions at batch, CIK and accession grain.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [batch_id, cik, accession_number]
+  - name: stg_sec_facts
+    description: As-filed facts as seen within each archived snapshot, retaining distinct values and source contexts.
+    columns:
+      - name: accession_number
+        data_tests: [not_null]
+      - name: tag
+        data_tests: [not_null]
+      - name: period_end
+        data_tests: [not_null]
+      - name: value_text
+        data_tests: [not_null]
+  - name: fact_economic_observations
+    description: Latest recorded FRED change per configured series and observation date at the selected cutoffs.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [series_id, observation_date]
+  - name: sec_selected_snapshots
+    description: Latest observed committed member set per scoped issuer, with explicit coverage bounds.
+    columns:
+      - name: cik
+        data_tests: [not_null, unique]
+  - name: sec_financial_candidates
+    description: Compatible facts tied to their filing and exact reporting period within the selected snapshot. Retains competing candidates.
+    columns:
+      - name: period_class
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [instant, annual, quarter, year_to_date]
+      - name: unit
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [USD, USD/shares]
+  - name: fact_company_financials
+    description: Unambiguous latest candidates by issuer, taxonomy tag, unit, period class and exact dates.
+    data_tests:
+      - unique_grain:
+          arguments:
+            columns: [cik, taxonomy, tag, unit, period_class, period_start, period_end]
+    columns:
+      - name: value_number
+        data_tests: [not_null]
+      - name: filing_object_key
+        data_tests: [not_null]

@@ -1,0 +1,15 @@
+services:
+  airflow-smoke:
+    build:
+      context: .
+      dockerfile: orchestration/Dockerfile
+    network_mode: none
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/fdep/orchestration/dags
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+      DO_NOT_TRACK: "1"
+      FDEP_TASK_PYTHON: /home/airflow/fdep-venv/bin/python
+      FDEP_AIRFLOW_WORK_DIR: /opt/airflow/fdep-runs
+    command: ["bash", "-ec", "airflow db migrate && python -m orchestration.airflow_smoke"]

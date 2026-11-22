@@ -1,0 +1,27 @@
+select
+    batch_id,
+    row_ordinal,
+    cik,
+    accession_number,
+    object_key,
+    source_row,
+    form,
+    is_amendment,
+    {{ field('payload_text', 'namespace') }} as taxonomy,
+    {{ field('payload_text', 'tag') }} as tag,
+    {{ field('payload_text', 'metric') }} as metric,
+    {{ field('payload_text', 'unit') }} as source_unit,
+    {{ field('payload_text', 'normalized_unit') }} as unit,
+    {{ field('payload_text', 'period_class') }} as period_class,
+    {{ field('payload_text', 'frame') }} as frame,
+    cast({{ field('payload_text', 'fiscal_year') }} as integer) as source_fiscal_year,
+    {{ field('payload_text', 'fiscal_period') }} as source_fiscal_period,
+    cast({{ field('payload_text', 'start_date') }} as date) as period_start,
+    cast({{ field('payload_text', 'end_date') }} as date) as period_end,
+    cast({{ field('payload_text', 'filed_date') }} as date) as filed_date,
+    cast({{ field('payload_text', 'selection_eligible') }} as boolean) as selection_eligible,
+    value_text,
+    value_number,
+    value_text is not null and value_number is null as is_quarantined
+from {{ ref('stg_sec_members') }}
+where dataset = 'facts'

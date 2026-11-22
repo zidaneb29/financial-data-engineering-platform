@@ -1,0 +1,28 @@
+[fred]
+observation_start = 2015-01-01
+
+[fred.series]
+FEDFUNDS = "monthly"
+CPIAUCSL = "monthly"
+UNRATE = "monthly"
+GDPC1 = "quarterly"
+DGS2 = "daily"
+DGS10 = "daily"
+
+[sec]
+period_end_start = 2019-01-01
+forms = ["10-K", "10-K/A", "10-Q", "10-Q/A"]
+
+[sec.companies]
+MSFT = "0000789019"
+AAPL = "0000320193"
+NVDA = "0001045810"
+AMZN = "0001018724"
+JPM = "0000019617"
+GS = "0000886982"
+BAC = "0000070858"
+JNJ = "0000200406"
+PFE = "0000078003"
+WMT = "0000104169"
+XOM = "0000034088"
+CVX = "0000093410"
