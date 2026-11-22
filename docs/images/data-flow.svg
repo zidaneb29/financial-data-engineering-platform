@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="462" viewBox="0 0 1120 462" role="img" aria-labelledby="title description">
+  <title id="title">Financial data platform data flow</title>
+  <desc id="description">Python collects FRED and SEC EDGAR records into validated archive batches. In the live cloud demonstration a Python loader transferred these batches through AWS S3 to Snowflake RAW. In the verified local build DuckDB holds the loaded data, dbt Core builds and tests analytics, and Streamlit reads those analytics. Airflow was tested in CI with a local fixture workflow. The offline Streamlit preview reads reviewed public Treasury and Microsoft CSV extracts directly.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0L8 4L0 8Z" fill="#516582"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #152b49; }
+    .title { font-size: 28px; font-weight: 700; }
+    .section { font-size: 18px; font-weight: 700; }
+    .name { font-size: 19px; font-weight: 700; }
+    .detail { font-size: 15px; fill: #344e69; }
+    .node { fill: #fff; stroke: #b8c8d9; stroke-width: 1.4; }
+    .flow { fill: none; stroke: #516582; stroke-width: 1.8; marker-end: url(#arrow); }
+  </style>
+  <rect x="1" y="1" width="1118" height="460" rx="16" fill="#fff" stroke="#cad5e2" stroke-width="2"/>
+  <text class="title" x="25" y="42">How data moves through the platform</text>
+
+  <rect x="451" y="62" width="643" height="116" rx="12" fill="#eaf1fd"/>
+  <text class="section" x="469" y="89">Live cloud demonstration</text>
+  <rect x="451" y="193" width="643" height="147" rx="12" fill="#e7f5f2"/>
+  <text class="section" x="469" y="220">Locally verified analytics</text>
+  <rect x="24" y="355" width="1070" height="83" rx="12" fill="#f2f5f9"/>
+
+  <path class="flow" d="M186 199H214"/>
+  <path class="flow" d="M408 188H427V132H468"/>
+  <path class="flow" d="M408 210H427V264H468"/>
+  <path class="flow" d="M638 132H838"/>
+  <path class="flow" d="M638 264H680"/>
+  <path class="flow" d="M850 264H892"/>
+  <path class="flow" d="M779 396H892"/>
+
+  <rect class="node" x="24" y="168" width="162" height="62" rx="8"/>
+  <text class="name" x="37" y="194">Public sources</text>
+  <text class="detail" x="37" y="214" style="font-size: 14px">FRED + SEC EDGAR</text>
+  <rect class="node" x="215" y="168" width="193" height="62" rx="8"/>
+  <text class="name" x="228" y="194">Python ingestion</text>
+  <text class="detail" x="228" y="214">Validates and archives</text>
+
+  <rect class="node" x="469" y="101" width="169" height="62" rx="8"/>
+  <text class="name" x="482" y="127">AWS S3</text>
+  <text class="detail" x="482" y="147">Stores archive objects</text>
+  <text class="detail" x="739" y="119" text-anchor="middle">Python loader</text>
+  <rect class="node" x="839" y="101" width="237" height="62" rx="8"/>
+  <text class="name" x="852" y="127">Snowflake RAW</text>
+  <text class="detail" x="852" y="147">Commits source records</text>
+
+  <rect class="node" x="469" y="233" width="169" height="62" rx="8"/>
+  <text class="name" x="482" y="259">DuckDB</text>
+  <text class="detail" x="482" y="279">Holds loaded records</text>
+  <rect class="node" x="681" y="233" width="169" height="62" rx="8"/>
+  <text class="name" x="694" y="259">dbt Core</text>
+  <text class="detail" x="694" y="279">Builds and tests views</text>
+  <rect class="node" x="893" y="233" width="183" height="62" rx="8"/>
+  <text class="name" x="906" y="259">Streamlit</text>
+  <text class="detail" x="906" y="279">Reads DuckDB views</text>
+  <text class="detail" x="469" y="322"><tspan font-weight="700">Airflow</tspan> orchestrated a local fixture build in a CI smoke test.</text>
+
+  <text class="section" x="43" y="390">Offline public preview</text>
+  <text class="detail" x="43" y="413">Runs from a clean checkout</text>
+  <rect class="node" x="469" y="366" width="310" height="62" rx="8"/>
+  <text class="name" x="482" y="391">Reviewed public CSV extracts</text>
+  <text class="detail" x="482" y="412">U.S. Treasury yields and Microsoft revenue</text>
+  <rect class="node" x="893" y="366" width="183" height="62" rx="8"/>
+  <text class="name" x="906" y="391">Streamlit</text>
+  <text class="detail" x="906" y="412">Reads preview CSVs</text>
+</svg>
