@@ -11,7 +11,7 @@ flowchart LR
     F --> H[dbt analytics views]
     H --> I[Read-only Streamlit dashboard]
     J[Reviewed Treasury and SEC CSV extracts] --> I
-    E -.->|dbt parity pending| H
+    E -.->|dbt parity unexecuted| H
 ```
 
 Phase 1 implements Python ingestion, filesystem storage, and offline tests. [Local ingestion](local-ingestion.md) describes the executable interface and on-disk contract. Snowflake is the target SQL engine. Snowflake SQL behavior requires a separately approved Snowflake integration run.

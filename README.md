@@ -22,7 +22,8 @@ Open the localhost URL printed by Streamlit. A fresh checkout shows U.S. Treasur
 ## Verification
 
 - **Private local history.** The 2019–2025 capture produced 3,934 FRED observation rows and 3,682 selected company facts for 12 issuers. All 31 DuckDB dbt data tests passed.
-- **Historical cloud demonstration.** Four batches committed through S3 to Snowflake RAW. Replay, rollback and teardown were verified. Snowflake dbt parity and the Linux Airflow runtime check remain pending.
+- **Historical cloud demonstration.** Four batches committed through S3 to Snowflake RAW. Replay, rollback and teardown were verified. dbt transformations were verified locally on DuckDB. The separate Snowflake/dbt parity test was prepared and never executed.
+- **Airflow runtime.** [GitHub Actions run 44985167711](https://github.com/zidaneb29/financial-data-engineering-platform/actions/runs/44985167711) verified DAG discovery, retry recovery, downstream failure blocking, and DuckDB publication after all 43 dbt nodes passed.
 
 [Architecture](docs/architecture.md) · [Build and test the pipeline offline](docs/phase5-airflow.md#run-the-local-smoke-test) · [Rebuild the private history](docs/dashboard-history.md) · [Release checklist](docs/phase7-publication.md)
 

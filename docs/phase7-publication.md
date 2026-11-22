@@ -17,8 +17,8 @@ The proposed destination is `zidaneb29/financial-data-engineering-platform` with
 | Completed 2019–2025 capture | Verified 18 committed batches, including 3,934 FRED observation rows and 8,395 SEC snapshot members. The warehouse selected 3,682 company facts across twelve issuers. | [Private historical capture](dashboard-history.md#completed-20192025-capture) |
 | Streamlit AppTest in an isolated copy | Rendered the three public preview tabs, 749 dated Treasury observations with gaps, and three Microsoft fiscal-year bars. The copy contained no private publication or archive and source credentials were cleared. | [Public historical preview](public-preview.md) |
 | Phase 3B bounded AWS and Snowflake demonstration | Four committed batches, 91 changes, 136 SEC memberships, deterministic replay and rollback. Snowflake demonstration objects were removed and the eight AWS infrastructure resources were retained at the time of teardown. | Historical live RAW execution. Account records remain private. |
-| Hosted Compose smoke | YAML and runtime settings checked locally. Windows host has no Docker engine. Linux container run and manual dispatch remain pending. | [Airflow runtime check](phase5-airflow.md#phase-7-hosted-runtime-check) |
-| Snowflake dbt adapter build and comparison | Preflight and exact row comparator prepared. Live build pending. | [Parity runbook](phase7-snowflake-parity.md) |
+| Hosted Compose smoke | [GitHub Actions run 44985167711](https://github.com/zidaneb29/financial-data-engineering-platform/actions/runs/44985167711) passed DAG discovery, task dependency, retry recovery, downstream blocking, and DuckDB publication checks. | [Airflow runtime check](phase5-airflow.md#phase-7-hosted-runtime-check) |
+| Snowflake dbt adapter build and comparison | Preflight and exact row comparator prepared. The Snowflake dbt build and exact cross-engine comparison were never executed. | [Parity runbook](phase7-snowflake-parity.md) |
 
 The public quickstart opens the two reviewed extracts directly. The synthetic smoke build exercises the pipeline offline. Reproducing private historical counts requires the preserved source archive and manifests.
 
@@ -40,13 +40,13 @@ The unstaged inventory has 134 files. It contains 15 root files, 27 documentatio
 
 - [x] Review candidate paths for key material, token patterns, credential assignments, account identifiers, and machine-specific paths. Replace user profile paths and live bucket names with portable instructions or placeholders. Test sentinel values remain in offline fixtures.
 - [x] Keep generated evidence under ignored paths and publish prose and reproducible commands. Exclude nested dbt output and verify that the file list contains source, configuration and documentation.
-- [x] Describe the synthetic, historical local, and historical live outcomes explicitly. Label Airflow runtime and Snowflake analytics results as pending.
+- [x] Describe the synthetic, historical local, and historical live outcomes explicitly. Record the successful hosted Airflow run and identify Snowflake/dbt parity as unexecuted.
 - [x] Confirm the proposed preview contents against their primary sources, regenerate the extracts byte for byte, and verify the preview in an isolated copy.
 - [x] Verify the Airflow workflow's manual trigger, read-only checkout, 15-minute limit and serial dispatch group. The Compose smoke container runs with networking disabled and receives no cloud credentials.
 - [ ] Confirm ownership and the MIT copyright notice. Authorize the initial commit separately from creating and pushing to the proposed public repository.
 - [ ] Review the exact staged tree against this manifest, rerun the candidate secret/path scan against that tree and check that the intended visibility is set before publication.
-- [ ] If validating Airflow first, approve the target GitHub repository, the workflow’s push to its default branch, and one manual Ubuntu dispatch within the confirmed runner allowance.
-- [ ] If validating Snowflake parity, approve the account and region, the refreshed estimate, the dedicated resources, one bounded run and the associated teardown. Save observed results before updating public claims.
+- [x] Verify the single manual hosted Airflow dispatch.
+The optional Snowflake/dbt parity run is outside project closeout.
 
 ## Phase 7 change inventory
 

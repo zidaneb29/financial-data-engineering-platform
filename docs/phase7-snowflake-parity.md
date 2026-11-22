@@ -1,6 +1,6 @@
 # Bounded Snowflake and DuckDB dbt comparison
 
-**Status** · The local preflight passed against the preserved Phase 3B replay and a fresh DuckDB replay. Snowflake execution awaits separate approval. The one planned run uses the four original Phase 3B manifests with the default dbt cutoffs and the same project revision on both adapters. The loader for this test copies the validated local RAW and OPS input directly to a dedicated Snowflake database. AWS, FRED, and SEC access are outside this run.
+**Status** · The local preflight passed against the preserved Phase 3B replay and a fresh DuckDB replay. The optional Snowflake dbt build and exact cross-engine comparison were prepared and never executed. The project closed with DuckDB dbt verification and a separate successful live Snowflake RAW ingestion demonstration. The one planned run uses the four original Phase 3B manifests with the default dbt cutoffs and the same project revision on both adapters. The loader for this test copies the validated local RAW and OPS input directly to a dedicated Snowflake database. AWS, FRED, and SEC access are outside this run.
 
 ## Local preflight
 

@@ -28,6 +28,8 @@ The build pulls the versioned Airflow image and installs pinned top-level projec
 
 ## Phase 7 hosted runtime check
 
+[GitHub Actions run 44985167711](https://github.com/zidaneb29/financial-data-engineering-platform/actions/runs/44985167711) passed. Airflow discovered the DAG and validated its task dependencies. The injected transient validation failure recovered on attempt two. The dbt build passed all 43 nodes and published DuckDB with 21 committed batches, six FRED series, and 12 selected SEC snapshots. The persistent failure exhausted its retry, blocked dbt, and produced no analytics database.
+
 The [manual GitHub Actions workflow](../.github/workflows/airflow-smoke.yml) runs the Compose commands above on an Ubuntu 24.04 standard runner with a 15-minute job timeout. The build needs registry and package index access. The runtime uses `network_mode: none`. The workflow passes no source or cloud secrets and requests read-only repository contents. GitHub offers standard runners free for public repositories. For an approved private run, confirm included minutes and billing before dispatch. [GitHub-hosted runner terms](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
 
 The smoke program discovers the DAG in an Airflow DAG bag and checks the three task dependencies and retry limits. A transient validation error must succeed on its second attempt and publish a fresh DuckDB database after all dbt tests pass. The program checks task order and queries for 21 committed batches, six FRED series and 12 selected SEC snapshots. A separate persistent validation failure must exhaust one retry, mark the transform upstream failed and leave the run without an analytics publication. CI logs contain the outcomes. This exercises the Airflow local test runtime. Scheduler and executor deployment remain outside the smoke scope.
@@ -50,7 +52,7 @@ Use `storage.transfer.prepare_batch` for local integrity validation and `S3Trans
 - The host smoke command against `.local/phase5/verification` and its same-directory retry each validated 21 committed batches. dbt reported `PASS=43 WARN=0 ERROR=0 SKIP=0` across 10 models, 2 seeds and 31 data tests.
 - `python -m pytest --basetemp=.local/phase5-pytest` in the project environment reported 132 passed and one skipped. The skipped test imports Airflow to verify the DAG graph and retry configuration. The host also passed static DAG syntax and Compose YAML checks.
 - A follow-up read-only query of the existing `.local/phase5/verification/analytics.duckdb` returned 21 committed batches, six distinct FRED series and 12 selected SEC snapshots.
-- Airflow runtime verification is blocked on this Windows host. The environment checks and outstanding acceptance criteria are below. Live DAG wiring, daily scheduling, backfill controls and Snowflake/dbt parity remain pending. Cloud execution requires separate approval.
+- The Phase 5 Windows host lacked a container runtime. The environment checks and outstanding acceptance criteria are below. Live DAG wiring, daily scheduling and backfill controls were outside the smoke test. The separate Snowflake/dbt parity test was never executed.
 
 ### Windows runtime check
 
@@ -60,6 +62,4 @@ Use `storage.transfer.prepare_batch` for local integrity validation and `S3Trans
 | Docker Desktop and Compose file checks | Docker Desktop and its CLI were absent from the standard all-users and per-user install paths. No Compose plugin was found in the checked standard locations. No Docker engine pipe was visible. |
 | `wsl.exe --status`, `wsl.exe --version`, `wsl.exe --list --verbose` | Each reported “The Windows Subsystem for Linux is not installed.” Exit codes were 50, 1 and 1, respectively. |
 
-The Compose smoke did not execute, so there are no container logs. Airflow DAG discovery, task states, retry behavior, failure propagation and analytics publication from inside Airflow remain unverified. The earlier host tests cover the task runner and its DuckDB output.
-
-The least disruptive next step is to use an existing machine with Docker Compose and a Linux container engine. On that machine, record `docker version` and `docker compose version`, then run the two Compose commands above and retain the build and run output. Confirm the discovered DAG ID, all three successful task states, the dbt totals and the published DuckDB contents before the disposable container exits. In a separate run, inject a task failure and check the single retry, downstream blocking and absence of a newly published analytics database. If verification must happen on this machine, enabling WSL 2 and installing Docker Desktop requires approval. [Microsoft WSL setup](https://learn.microsoft.com/en-us/windows/wsl/install) · [Docker Desktop Windows setup](https://docs.docker.com/desktop/setup/install/windows-install/)
+The Compose smoke was unavailable on this Windows host. The later hosted run above completed runtime verification.
