@@ -1,6 +1,6 @@
 # Controlled AWS and Snowflake demonstration
 
-The eight approved AWS resources are deployed in Ohio and the scoped transfer smoke tests passed. Use the existing `fdep-transfer` profile and dedicated bucket. See the [AWS smoke report](aws-deployment-smoke-report.md) and [Phase 3A assessment](phase3a-readiness.md). The Snowflake target is the existing AWS Ohio Enterprise trial. This runbook requires separate live authorization.
+This runbook records the completed AWS Ohio and Snowflake demonstration. The scoped AWS transfer smoke tests passed, the Snowflake demonstration objects were removed, and all eight dedicated Terraform-managed AWS resources were later destroyed and independently verified absent. A future live run requires separate authorization and a newly provisioned bucket and transfer role. [AWS smoke report](aws-deployment-smoke-report.md) · [Phase 3A assessment](phase3a-readiness.md) · [Teardown verification](phase7-publication.md#verification-record)
 
 ## Prepared scope and verified inputs
 
@@ -17,9 +17,9 @@ Namespace fdep-demo yields 15 unique destination objects totaling 5,243,107 byte
 
 Replaying the same run ID must add no load rows or S3 uploads. Loading the optional snapshots adds distinct ledger/request memberships and the second SEC snapshot while preserving 91 cumulative change rows.
 
-## Local tools and existing AWS deployment
+## Local tools and AWS prerequisites
 
-Use the project virtual environment with Python 3.11.9 and the pinned cloud clients. Snowflake CLI and SnowSQL are optional. Check the reviewed AWS bucket, namespace and runtime identity locally, and refresh the short-lived source session if required. Before approved transfer, confirm `aws sts get-caller-identity --profile fdep-transfer` reports the expected `FdepTransferRuntime` assumed role. This demonstration reuses the deployed AWS infrastructure. AWS provisioning and infrastructure teardown require separate authorization.
+Use the project virtual environment with Python 3.11.9 and the pinned cloud clients. Snowflake CLI and SnowSQL are optional. For a future approved run, configure the transfer profile from the new deployment outputs, check the bucket and namespace, and refresh the short-lived source session as needed. Before transfer, confirm `aws sts get-caller-identity --profile fdep-transfer` reports the expected `FdepTransferRuntime` assumed role. AWS provisioning and infrastructure teardown require separate authorization.
 
 ## Snowflake resources, roles and authentication
 

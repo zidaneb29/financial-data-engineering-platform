@@ -1,6 +1,6 @@
 # Phase 2D deployment preparation
 
-**Controlled AWS deployment completed:** see [live deployment and smoke report](aws-deployment-smoke-report.md). Eight explicitly approved Ohio resources were created, the restricted runtime was assumed and tested, postapply reconciliation reported no changes, and disposable objects were removed. Snowflake remains unactivated.
+**Later deployment and teardown:** Eight approved Ohio resources were created and the restricted transfer role passed the live smoke tests. After the subsequent Snowflake demonstration, all eight resources were destroyed and independently verified absent. The preparation findings below predate that deployment. [AWS smoke report](aws-deployment-smoke-report.md) · [Teardown verification](phase7-publication.md#verification-record)
 
 **Latest account-aware verification:** see [AWS Ohio plan review](aws-account-plan-review.md). The actual project is us-east-2, temporary non-root browser authentication and Terraform credential-process bridging succeeded, and the saved account-aware plan contains six additions with no changes/deletions. Earlier missing-authentication and us-east-1 assumptions below are superseded by that review. No provisioning occurred.
 

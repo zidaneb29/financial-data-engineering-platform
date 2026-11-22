@@ -20,7 +20,9 @@ Phase 2A adds validated schema 2 manifests, checked normalized files, durable se
 
 Phase 2B implements S3 transfer, client-mediated Snowflake RAW loading, exact numeric quarantine and cloud command wiring. Verification is offline. The [cloud integration guide](cloud-integration.md) documents execution, setup, costs and teardown.
 
-Phase 3B verified the bounded Snowflake RAW load, replay and teardown. Phase 4 adds dbt Core views over the committed RAW and OPS contract, with credential-free DuckDB verification and a separately approved Snowflake parity run. See [Phase 4 dbt transformations](phase4-dbt.md).
+Phase 3B verified the bounded Snowflake RAW load, replay and rollback. The Snowflake demonstration objects were removed. A separate AWS teardown destroyed all eight Terraform-managed Ohio resources. Terraform state is empty, and independent AWS checks confirmed removal of the bucket, IAM role, policy and attachment. [Teardown verification](phase7-publication.md#verification-record)
+
+Phase 4 adds dbt Core views over the committed RAW and OPS contract, with credential-free DuckDB verification. The Snowflake parity run remains unexecuted. [Phase 4 dbt transformations](phase4-dbt.md)
 
 Phase 5 adds a manual Airflow fixture DAG and a host smoke command that execute the same local stages. The container runs without external networking. See [Phase 5 orchestration](phase5-airflow.md) for the proposed live task graph and the verification checkpoint.
 
@@ -35,7 +37,7 @@ Phase 6 serves a local Streamlit dashboard over the read-only DuckDB publication
 | Local orchestration | Deterministic fixture → validation → DuckDB dbt build | Retry-safe fixture creation, failure propagation and atomic analytics publication |
 | Local analytics | Published DuckDB dbt views and warehouse ledger → Streamlit and Plotly | Source coverage, reporting contexts, missing values and lineage |
 | Local live development | Source API → Python CLI → filesystem | Opt-in source connectivity and representative payload handling |
-| Historical cloud demonstration | Python CLI → local archive → S3 → Snowflake RAW and OPS | Scoped transfer, transactional load, replay, rollback and teardown |
+| Historical cloud demonstration | Python CLI → local archive → S3 → Snowflake RAW and OPS | Scoped transfer, transactional load, replay and rollback. Snowflake demonstration objects and dedicated AWS resources were subsequently removed. |
 | Prepared adapter comparison | Preserved local RAW and OPS → dedicated Snowflake database → dbt | [Exact row comparison](phase7-snowflake-parity.md) awaits approved execution |
 
 Implement the CLI and storage contract before Airflow. Use the same functions for scheduled and manual runs. Use Linux containers under Docker Compose on Windows when Airflow is introduced. Keep the Compose stack as a local demonstration environment. Pin application, adapter, and container dependencies as each component is introduced. [Airflow Docker guidance](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html)

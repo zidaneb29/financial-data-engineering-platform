@@ -2,7 +2,7 @@
 
 For the current Snowflake account, cost basis and approval gates, see the [Phase 3A assessment](phase3a-readiness.md). The Snowflake assumptions below describe the earlier phase.
 
-**Deployment update:** The user subsequently authorized the eight-resource apply and disposable-object smoke tests. See [actual AWS deployment results](aws-deployment-smoke-report.md): all eight resources reconciled, real role assumption and prefix checks passed, missing-object reads worked, replay passed and the bucket is empty. Earlier pending-live statements below describe the predeployment review.
+**Deployment and teardown:** The eight-resource deployment reconciled with Terraform state, and live role assumption, prefix checks, missing-object reads and replay passed. After the Phase 3B demonstration, all eight resources were destroyed and independently verified absent. The existing source role remained in place. The design and pending checks below describe the predeployment review. [AWS smoke results](aws-deployment-smoke-report.md) · [Teardown verification](phase7-publication.md#verification-record)
 
 ## Design and account evidence
 

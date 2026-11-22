@@ -1,6 +1,6 @@
 # Controlled AWS deployment and runtime smoke test
 
-For the current Snowflake account, cost basis and approval gates, see the [Phase 3A assessment](phase3a-readiness.md). The Snowflake assumptions below describe the earlier phase.
+This report records the AWS smoke test before the Snowflake demonstration. All eight Ohio resources were later destroyed, and Terraform and AWS checks confirmed removal. [Phase 3A assessment](phase3a-readiness.md) · [Final teardown verification](phase7-publication.md#verification-record)
 
 ## Authorized scope and preflight
 
@@ -45,16 +45,14 @@ The local fdep-transfer profile uses role_arn, source_profile=fdep-project-terra
 
 The second uploader-path check confirms actual first-write behavior, not just direct SDK PUT behavior. Evidence is `smoke-results.json` (HTTP statuses, request identifiers, digest and sanitized identity), `final-smoke.json`, `apply-output.txt`, `preapply.json`, `preapply-output.txt` and `postapply-output.txt`. Local smoke scripts and fresh local working directories are ignored artifacts; no financial source archive was modified. No complete dataset was transferred.
 
-## Costs and retention recommendation
+## Costs and temporary retention
 
 Only a few dozen requests and two tiny disposable bodies were used. At the retained Ohio request prices, the expected S3 request charge is below $0.01 before applicable allowances/credits. The previous $0.05 AWS smoke allowance remains adequate. Actual posted billing, tax and credit application were not queried or verified; billing can lag. No unexpected service charges were observed in API responses, but that is not a billing reconciliation. No paid Cost Explorer queries, new monitoring resources or account upgrades were introduced.
 
-The bucket is now empty and unversioned; no compute, warehouse or continuously running service exists from this deployment. The IAM roles/policies and empty bucket can be retained temporarily for the upcoming separately authorized Snowflake demonstration without a planned standing compute charge. **Recommend temporary retention**, with teardown if that demonstration is deferred or abandoned. There are still administration/security responsibilities, and future requests or data retention can incur charges. The full prospective demonstration estimate remains approximately $1.30 before tax/credits, with $5 reserve and $15 ceiling; actual Snowflake trial offer, balance and generation availability remain unverified.
+At the end of the smoke test, the bucket was empty and unversioned. The dedicated IAM resources and bucket were retained for the subsequently authorized Snowflake demonstration. The prospective demonstration estimate at that point was approximately $1.30 before tax and credits, with a $5 reserve and $15 ceiling.
 
-Snowflake has not been activated. No financial warehouse load, commit or publication occurred. No runtime source code changed, so regression tests were not repeated for this operational-only step; the prior 17 relevant Python and Terraform mock tests remain the latest automated checks. The live checks above add deployment evidence rather than replace regression tests.
+The AWS smoke test preceded Snowflake activation and financial warehouse loading. No runtime source code changed during the smoke test. The 17 relevant Python and Terraform mock tests remained the automated baseline for this phase.
 
-## Next steps and teardown
+## Subsequent demonstration and teardown
 
-AWS runtime smoke verification is complete. Obtain separate approval for Snowflake AWS / US East (Ohio) / Standard trial activation and setup, followed by the already documented staged financial-data demonstration. Keep runtime calls on fdep-transfer, provisioning/cleanup on the separate approved administrator identity. Review credentials and budget before the next run; never transfer with administrator credentials merely to avoid a failure.
-
-No cloud cleanup beyond disposable-object removal was executed. If teardown is selected: stop writers, confirm this dedicated bucket is empty, generate/review a destroy plan with the same state and `.local/runtime-identity-review/demo.tfvars.json`, and obtain/confirm authorization for destruction. Terraform handles the managed attachment/role/policy dependency ordering. Verify all eight resources are absent afterwards and reconcile billing after its reporting delay. Preserve local source data and historical evidence; do not remove the project account or its AWS-managed roles. End temporary sessions when no longer needed. No unneeded billable compute is running.
+The later Phase 3B run used this deployment to transfer and load four batches. After Snowflake demonstration cleanup and S3 object removal, the separately authorized Terraform teardown destroyed the eight AWS resources. The project source role, local archives and evidence were preserved. [Controlled demonstration](controlled-deployment.md) · [Verification record](phase7-publication.md#verification-record)

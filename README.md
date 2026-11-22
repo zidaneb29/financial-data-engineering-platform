@@ -42,7 +42,7 @@ The live demonstration verified storage in S3 and loading into Snowflake RAW. Th
 ## Verification
 
 - **Private local history.** The 2019–2025 capture produced 3,934 FRED observation rows and 3,682 selected company facts for 12 issuers. All 31 DuckDB dbt data tests passed.
-- **Historical cloud demonstration.** Four batches committed through S3 to Snowflake RAW. Replay and rollback were verified, and the Snowflake demonstration objects were removed. Teardown of the eight Terraform-managed AWS resources is pending. [Verification record](docs/phase7-publication.md)
+- **Historical cloud demonstration.** Four batches committed through S3 to Snowflake RAW. Replay and rollback were verified. The Snowflake demonstration objects were removed, and independent AWS checks confirmed removal of all eight Terraform-managed resources. [Verification record](docs/phase7-publication.md#verification-record)
 - **Airflow runtime.** The CI smoke test verified workflow discovery, retry recovery, failure blocking, and DuckDB publication after all 43 dbt nodes passed. [GitHub Actions run 44985167711](https://github.com/zidaneb29/financial-data-engineering-platform/actions/runs/44985167711)
 
 [Build and test the pipeline offline](docs/phase5-airflow.md#run-the-local-smoke-test) · [Rebuild the private history](docs/dashboard-history.md)

@@ -1,6 +1,6 @@
 # Verification and publication checklist
 
-The proposed destination is `zidaneb29/financial-data-engineering-platform` with public visibility. The candidate includes local ingestion, archived replay, DuckDB/dbt analytics, and a credential-free historical preview. The proposed MIT license covers project-authored code and documentation. The [preview data notices](../preview/NOTICE.md) cover the source data separately. The working repository has no commits or configured remote.
+The public repository is [zidaneb29/financial-data-engineering-platform](https://github.com/zidaneb29/financial-data-engineering-platform). It includes local ingestion, archived replay, DuckDB/dbt analytics, and a credential-free historical preview. The [MIT license](../LICENSE) covers project-authored code and documentation. The [preview data notices](../preview/NOTICE.md) cover the source data separately.
 
 ## Verification record
 
@@ -16,7 +16,9 @@ The proposed destination is `zidaneb29/financial-data-engineering-platform` with
 | Streamlit API rendering with both local publications | All three tabs rendered. Subsequent browser verification covered the redesigned dashboard and the owner visually approved the private historical build. | Synthetic fixture and historical replay |
 | Completed 2019–2025 capture | Verified 18 committed batches, including 3,934 FRED observation rows and 8,395 SEC snapshot members. The warehouse selected 3,682 company facts across twelve issuers. | [Private historical capture](dashboard-history.md#completed-20192025-capture) |
 | Streamlit AppTest in an isolated copy | Rendered the three public preview tabs, 749 dated Treasury observations with gaps, and three Microsoft fiscal-year bars. The copy contained no private publication or archive and source credentials were cleared. | [Public historical preview](public-preview.md) |
-| Phase 3B bounded AWS and Snowflake demonstration | Four committed batches, 91 changes, 136 SEC memberships, deterministic replay and rollback. Snowflake demonstration objects were removed and the eight AWS infrastructure resources were retained at the time of teardown. | Historical live RAW execution. Account records remain private. |
+| `python -m streamlit run dashboard/app.py --server.address 127.0.0.1 --server.headless true --browser.gatherUsageStats false` in an isolated checkout, captured with Playwright Chromium | Both preview CSV hashes matched the documented values. The browser rendered 749 Treasury observations and three Microsoft fiscal-year bars. The README images, captions, and relative links rendered locally. | [README visuals](../README.md#open-the-historical-preview) |
+| Phase 3B bounded AWS and Snowflake demonstration | Four committed batches, 91 changes, 136 SEC memberships, deterministic replay and rollback. The Snowflake demonstration objects were removed. | Historical live RAW execution. Account records remain private. |
+| AWS teardown, November 22, 2026 | A refreshed `terraform plan -destroy` showed 0 additions, 0 changes and 8 deletions. The bucket had no objects, versions, delete markers or incomplete multipart uploads. Applying the reviewed saved plan destroyed all eight resources, and `terraform state list` returned no addresses. Independent AWS API checks confirmed the bucket, dedicated IAM role, policy and attachment were absent. | The existing source IAM role and preserved local archives, DuckDB publications and verification evidence were unchanged. |
 | Hosted Compose smoke | [GitHub Actions run 44985167711](https://github.com/zidaneb29/financial-data-engineering-platform/actions/runs/44985167711) passed DAG discovery, task dependency, retry recovery, downstream blocking, and DuckDB publication checks. | [Airflow runtime check](phase5-airflow.md#phase-7-hosted-runtime-check) |
 | Snowflake dbt adapter build and comparison | Preflight and exact row comparator prepared. The Snowflake dbt build and exact cross-engine comparison were never executed. | [Parity runbook](phase7-snowflake-parity.md) |
 
@@ -30,11 +32,11 @@ The public quickstart opens the two reviewed extracts directly. The synthetic sm
 | Source and database contracts | `ingestion/`, `storage/`, `warehouse/`, `dbt/`, `infrastructure/` |
 | Presentation, orchestration and reproduction tools | `dashboard/`, `orchestration/`, `.github/workflows/airflow-smoke.yml`, `scripts/`, `tests/` |
 | Reviewed public data | `preview/treasury-10y.csv`, `preview/microsoft-revenue.csv`, `preview/NOTICE.md` |
-| Methodology, limits and historical evidence summaries | `docs/` |
+| Methodology, limits, historical evidence summaries, and README visuals | `docs/` |
 
 Keep source downloads, local archives and manifests, object exports, private contact details, credential profiles and keys, cloud account IDs and deployment output outside the public file set. Keep Terraform state and plans, virtual environments, DuckDB files, dbt output and profiles, Airflow metadata, test scratch directories and logs ignored. `.env.example` is the public environment template. The versioned Terraform provider lock is a reproducibility input. Pinning covers direct Python dependencies and the Airflow image tag. Transitive dependency and container rebuilds can vary.
 
-The unstaged inventory has 134 files. It contains 15 root files, 27 documentation files, 21 dbt files, 18 tests, 12 warehouse files, eight scripts, seven ingestion files, six dashboard files, five each for infrastructure, orchestration and storage, three preview files, one config file and one workflow. The two preview CSVs total 18,741 bytes. The exact local inventory is saved under ignored release evidence.
+The two preview CSVs total 18,741 bytes. The initial release candidate inventory is saved under ignored release evidence.
 
 ## Final review
 
@@ -43,8 +45,6 @@ The unstaged inventory has 134 files. It contains 15 root files, 27 documentatio
 - [x] Describe the synthetic, historical local, and historical live outcomes explicitly. Record the successful hosted Airflow run and identify Snowflake/dbt parity as unexecuted.
 - [x] Confirm the proposed preview contents against their primary sources, regenerate the extracts byte for byte, and verify the preview in an isolated copy.
 - [x] Verify the Airflow workflow's manual trigger, read-only checkout, 15-minute limit and serial dispatch group. The Compose smoke container runs with networking disabled and receives no cloud credentials.
-- [ ] Confirm ownership and the MIT copyright notice. Authorize the initial commit separately from creating and pushing to the proposed public repository.
-- [ ] Review the exact staged tree against this manifest, rerun the candidate secret/path scan against that tree and check that the intended visibility is set before publication.
 - [x] Verify the single manual hosted Airflow dispatch.
 The optional Snowflake/dbt parity run is outside project closeout.
 
